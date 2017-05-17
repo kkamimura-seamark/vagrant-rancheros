@@ -50,7 +50,6 @@ Vagrant.configure("2") do |config|
   (1..$num_instances).each do |i|
     config.vm.define vm_name = "%s-%02d" % [$instance_name_prefix, i] do |config|
       config.vm.guest = :linux
-#      config.vm.hostname = vm_name
 
       if $expose_docker_tcp
         config.vm.network "forwarded_port", guest: 2375, host: ($expose_docker_tcp + i - 1), host_ip: "127.0.0.1", auto_correct: true
@@ -70,15 +69,6 @@ Vagrant.configure("2") do |config|
       ip = "172.17.8.#{i+100}"
       config.vm.network :private_network, ip: ip
 
-      # Uncomment below to enable NFS for sharing the host machine into the coreos-vagrant VM.
-      #config.vm.synced_folder ".", "/home/rancher/share", id: "rancher", :nfs => true, :mount_options => ['nolock,vers=3,udp']
-#      $shared_folders.each_with_index do |(host_folder, guest_folder), index|
-#        config.vm.synced_folder host_folder.to_s, guest_folder.to_s, id: "%s-share%02d" %[instance_name_prefix, index], nfs: true, mount_options: ['nolock,vers=3,udp']
-#      end
-
-#      if $share_home
-#        config.vm.synced_folder ENV['HOME'], ENV['HOME'], id: "home", :nfs => true, :mount_options => ['nolock,vers=3,udp']
-#      end
       config.vm.synced_folder ".", "/vagrant", disabled: true
     end
   end
