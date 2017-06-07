@@ -10,7 +10,7 @@ CONFIG = File.join(File.dirname(__FILE__), "config.rb")
 
 $num_instances = 1
 $instance_name_prefix = "rancher"
-$box_version="1.0.1"
+$box_version="1.0.2"
 $enable_serial_logging = false
 $share_home = false
 $vm_gui = false
